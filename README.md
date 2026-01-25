@@ -1,33 +1,33 @@
 # HomeTeacherDev
 
-**HomeTeacher 開発用リポジトリ**
+**HomeTeacher 開発用 (ステージング) リポジトリ**
 
-このリポジトリは、[HomeTeacher](https://github.com/ThousandsOfTies/HomeTeacher) の開発版（ステージング環境）です。
-最新の機能を本番環境にマージする前に、ここで動作確認を行います。
+このリポジトリは、[HomeTeacher](https://github.com/ThousandsOfTies/HomeTeacher) の **ステージング環境** です。
+各サブリポジトリ (`home-teacher-core` 等) の `main` ブランチの最新状態をデプロイし、本番環境更新前の動作確認を行うために使用します。
 
-## 🎯 Versions
+## 🎯 環境の役割
 
-### 📚 Dev Build (TutoTuto)
-開発中の最新ビルドです。動作が不安定な可能性があります。
+| 環境 | リポジトリ | 役割 | 参照するコード |
+|---|---|---|---|
+| **Staging** (Dev) | **此処 (HomeTeacherDev)** | 最新の動作確認 | 各サブリポジトリの `main` (最新) |
+| **Production** | [HomeTeacher](https://github.com/ThousandsOfTies/HomeTeacher) | 安定版の公開 | 各サブリポジトリの `main` (検証済み時点) |
+
+## 📚 Dev Build (TutoTuto)
 
 **[Launch Dev App →](https://thousandsofties.github.io/HomeTeacherDev/)**
 
-```
-HomeTeacherDev/ (このリポジトリ)
-├── .github/workflows/  # GitHub Pages自動デプロイ
-├── Makefile            # 統合ビルド管理
-└── repos/              # 依存リポジトリ
-    ├── drawing-common/
-    └── home-teacher-core/
-```
+- サブリポジトリの `main` ブランチの最新状態が反映されます。
+- 本番環境と異なり、開発中の機能が含まれる可能性があります。
 
-## ⚠️ 注意事項
+## 🛠️ 開発フロー
 
-- **開発用環境**: この環境は開発者のテスト用です。
-- **データのリセット**: データベース構造の変更に伴い、保存されたデータがリセットされる可能性があります。
-- **API接続先**: 本番API、または開発用APIに接続されます（設定によります）。
+1. **実装**: `home-teacher-core` 等のサブリポジトリで開発を行い、`main` にプッシュします。
+2. **ステージング反映**: この `HomeTeacherDev` リポジトリで [Actions] からワークフローを手動実行（または空コミットをプッシュ）します。
+   - これにより、サブリポジトリの最新 `main` が取り込まれてデプロイされます。
+3. **検証**: 生成された [Dev App](https://thousandsofties.github.io/HomeTeacherDev/) で動作確認を行います。
+4. **本番反映**: 検証が完了したら、本番用リポジトリ `HomeTeacher` 側でデプロイを実行します。
 
-## 🚀 クイックスタート
+## 🚀 クイックスタート (ローカル)
 
 ```bash
 git clone https://github.com/ThousandsOfTies/HomeTeacherDev.git
@@ -35,12 +35,7 @@ cd HomeTeacherDev
 make setup
 ```
 
-## 📤 本番への反映手順
-
-1. このDev環境で動作確認を完了する
-2. `home-teacher-core` 等の各リポジトリを `main` ブランチにマージ
-3. 本番用リポジトリ `HomeTeacher` で `make update-versions` を実行
-4. 本番環境へデプロイ
+**Note**: `Makefile` の設定により、デフォルトで各リポジトリの `main` ブランチがクローンされます。
 
 ---
-Since this is a development mirror, please refer to the [Main Repository](https://github.com/ThousandsOfTies/HomeTeacher) for detailed documentation.
+For official documentation, please refer to the [Main Repository](https://github.com/ThousandsOfTies/HomeTeacher).
