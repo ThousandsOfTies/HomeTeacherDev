@@ -13,7 +13,7 @@ REPOS_DIR := repos
 # 形式: リポジトリ名|GitHubユーザー/リポジトリ|ブランチ
 REPOSITORIES := \
 	drawing-common|ThousandsOfTies/drawing-common|main \
-	home-teacher-core|ThousandsOfTies/home-teacher-core|main
+	home-teacher-core|ThousandsOfTies/home-teacher-core|dev
 
 # リポジトリ情報を解析するヘルパー関数
 define get_repo_info
@@ -61,7 +61,7 @@ setup: clone pull install build-repos
 ## clone: 依存リポジトリをクローン
 clone:
 	@echo "$(BLUE)📦 依存リポジトリをクローン中...$(NC)"
-	@mkdir -p $(REPOS_DIR)
+	@-mkdir $(REPOS_DIR)
 	@$(foreach repo,$(REPOSITORIES), \
 		name=$(call get_repo_info,$(repo),1); \
 		url=https://github.com/$(call get_repo_info,$(repo),2).git; \
